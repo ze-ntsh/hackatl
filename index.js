@@ -58,7 +58,7 @@ app.post('/create', async function (req, res) {
                 await page.waitForSelector(textareaSelector, { visible: true });
                 await page.click(textareaSelector);
                 await page.type(textareaSelector, templateText);
-                await page.waitForTimeout(1000 + Math.floor(Math.random() * 2000));
+                await page.waitForTimeout(1000);
 
                 const sendButtonSelector = 'button[data-testid="send-button"]:not([disabled])';
                 await page.waitForSelector(sendButtonSelector, { visible: true });
@@ -70,7 +70,7 @@ app.post('/create', async function (req, res) {
                     { delay: Math.floor(Math.random() * 100) }
                 );
 
-                await page.waitForTimeout(40000);
+                await page.waitForTimeout(35000);
 
                 // Get all image sources from the page
                 let imageUrls = await page.evaluate(() => {
@@ -174,7 +174,7 @@ app.post('/upload', async function(req, res) {
                 await inputUploadHandle.uploadFile(imagePath);
 
                 // Random delay to simulate human-like interaction
-                await page.waitForTimeout(1000 + Math.floor(Math.random() * 2000));
+                await page.waitForTimeout(500);
 
                 // Type into the textarea after making sure it's enabled
                 const textareaSelector = '#prompt-textarea';
@@ -183,7 +183,7 @@ app.post('/upload', async function(req, res) {
                 await page.type(textareaSelector, 'Please analyze this image', { delay: 100 + Math.floor(Math.random() * 100) });
 
                 // Random delay to simulate human-like interaction
-                await page.waitForTimeout(1000 + Math.floor(Math.random() * 2000));
+                await page.waitForTimeout(500);
 
                 // Wait for the send button to be enabled and click it
                 const sendButtonSelector = 'button[data-testid="send-button"]:not([disabled])';
@@ -196,7 +196,7 @@ app.post('/upload', async function(req, res) {
                     { delay: Math.floor(Math.random() * 100) }
                 );
 
-                await page.waitForTimeout(40000);
+                await page.waitForTimeout(30000);
                 // Wait for the response to be visible
                 await page.waitForSelector('[data-message-author-role="assistant"]', { visible: true });
                 const responses = await page.$$('[data-message-author-role="assistant"]');
@@ -206,11 +206,6 @@ app.post('/upload', async function(req, res) {
 
                 console.log('GPT-4 Response:', responseText);
 
-
-                await page.waitForTimeout(400);
-
-                await page.waitForTimeout(400);
-
                 // Wait for the new prompt area to be visible
 
                 await page.goto('https://chat.openai.com/?model=gpt-4-dalle');
@@ -219,7 +214,7 @@ app.post('/upload', async function(req, res) {
                 await page.waitForSelector(textareaSelector, { visible: true });
                 await page.click(textareaSelector);
                 await page.type(textareaSelector, responseText);
-                await page.waitForTimeout(1000 + Math.floor(Math.random() * 2000));
+                await page.waitForTimeout(1000);
 
                 await page.waitForSelector(sendButtonSelector, { visible: true });
                 await page.mouse.click(
@@ -228,7 +223,7 @@ app.post('/upload', async function(req, res) {
                     { delay: Math.floor(Math.random() * 100) }
                 );
 
-                await page.waitForTimeout(40000);
+                await page.waitForTimeout(35000);
 
                 // Get all image sources from the page
                 let imageUrls = await page.evaluate(() => {
